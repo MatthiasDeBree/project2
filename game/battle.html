@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+
+    <link rel="stylesheet" type="text/css" href="game.css" media="screen" />
+</head>
+<body>
+
+<div id="wrapper">
+    
+    <div id="optionWindow">
+        
+        <div id="pickMonsters">
+
+        </div>
+        <p>Kies een monster om in te zetten. Druk daarna op "start battle".</p>
+        <a href="#" id="startBattle">Start battle</a>
+    </div>
+
+    <div id="levelWindow">
+        <img id="myMonster" src=""/>
+        <p id="information"></p>
+        <p id="hp">health: <span id="oldHp"></span><span class="fat" id="extraHp"></span></p>
+        <p id="str">strength: <span id="oldStr"></span><span class="fat" id="extraStr"></span></p>
+        <p id="exp"></p>
+        <a href="#" id="continueBattle">Continue battle</a>
+    </div>
+
+    <div id="opponent">
+        <div id="opponentCreature" class="creatureInfo">
+            <p id="opponentName">Lv. Monster</p>
+
+            <div id="opponentHealth" class="health">
+                <div class="color"></div>
+            </div>
+        </div>
+
+        <img class="ground" src="../img/ground.png" />
+        <img id="opponentPic" src="" />
+    </div>
+
+    <div id="player">
+        <div id="playerCreature" class="creatureInfo">
+            <p id="playerName">Lv. Monster</p>
+
+            <div id="playerHealth" class="health">
+                <div class="color"></div>
+            </div>
+
+            <div id="playerExp">
+                <div id="experience"></div>
+            </div>
+        </div>
+
+        <img class="ground" src="../img/ground.png" />
+        <img id="playerPic" src="" />
+    </div>
+
+    <div id="attacks">
+        <textarea id="battleLog" rows="4" cols="50" readonly="true">
+        </textarea>
+
+        <div id="skillsAndEvents">
+            <p id="info">Kies uit een van de drie aanvallen.</p>
+
+            <ul id="skills">
+                <li class="skill" ><a id="skill1" href="#"></a></li>
+                <li class="skill" ><a id="skill2" href="#"></a></li>
+                <li class="skill" ><a id="skill3" href="#"></a></li>
+            </ul>
+
+            <ul id="events" style="display: none;">
+                <li class="event"><a id="run" href="#">Run</a></li>
+                <li class="event"><a id="catch" href="#">Catch</a></li>
+            </ul>
+        </div>
+    </div>
+
+</div>
+
+
+<script src="jQuery.js"></script>
+<script src="jquery.scrollTo.min.js"></script>
+<script src="game.js"></script>
+</body>
+</html>

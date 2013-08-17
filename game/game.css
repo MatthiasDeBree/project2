@@ -1,0 +1,149 @@
+@import url(http://fonts.googleapis.com/css?family=Fauna+One);
+
+* {margin: 0;padding: 0;font-family: 'Fauna One', serif;}
+body {width: 100%;overflow: hidden;}
+div#wrapper {height: 100%;width: 100%;}
+div#startscreen {height: 100%;width: 100%;background-size: 100%;background-image: url("bg.jpg");}
+#startscreen ul#menu {margin-left: 50px;padding-top: 20px;list-style: none;}
+#startscreen ul#menu li.option {padding-top: 45px;}
+#startscreen ul#menu li.option a {font-family: SketchFlow Print;font-weight: 600;font-size: 20px;background-color: #6b4935; color: Black; text-decoration: none; font-size: 20px; border-radius: 5px; border: 1px solid Black;}
+#startscreen ul#menu li.option a#newGame {padding: 12px 43px;}
+#startscreen ul#menu li.option a#loadGame {padding: 12px 39px;}
+#startscreen ul#menu li.option a#help {padding: 12px 75px;}
+#startscreen #madeBy {position: absolute;color: white;font-family: SketchFlow Print;font-size: 14px;bottom: 2px;right: 10px;}
+ul#myAccounts {margin-top: 20px;list-style-type: none;}
+ul#myAccounts li {margin: 20px 10px;border-bottom: 1px solid white;width: 300px;}
+ul#myAccounts li a {color: white;text-decoration: none;}
+ul#myAccounts li a span {float: right;}
+
+#create {}
+#create #form { width: 250px;margin: 0 auto;margin-bottom: 5%;}
+.error
+{
+    border: 1px solid red!important;
+    color: red;
+}
+    #create #form input
+    {
+        width: 200px;
+        height: 26px;
+        font-size: 16px;
+        -webkit-box-shadow:  2px 2px 5px 1px rgba(50, 50, 50, 0.3);
+        box-shadow:  2px 2px 5px 1px rgba(50, 50, 50, 0.3);
+        border: none;
+        border-radius: 5px;
+        padding: 5px;
+        margin-top: 10px;
+    }
+    #create #monsters
+    {
+        margin: 0 auto;
+        width: 350px;
+    }
+    #create #createPlayer
+    {
+        margin: 0 auto;
+        width: 129px;
+        padding: 20px 20px;
+        color: rgb(255, 255, 255);
+        text-decoration: none;
+        display: block;
+        text-align: center;
+        background-color: rgb(50,50,50);
+        border-radius: 5px;
+    }
+#pickMonsters
+{
+    margin-bottom: 50px;
+}
+#optionWindow p
+{
+    float: left;
+}
+#startBattle
+{
+    margin-top: -20px!important;
+    margin-left: 20px;
+    float: left;
+    width: 129px;
+    padding: 20px 20px;
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+    display: block;
+    text-align: center;
+    background-color: rgb(50,50,50);
+    border-radius: 5px;
+}
+#create ul {margin: 0 auto;margin-bottom: 5%;}
+#create ul li {display: inline;}
+.selected {border: 5px solid blue;}
+
+
+#wrapper #map {position: absolute;}
+#wrapper #levelMarkers .marker {position:absolute;padding: 10px;background-color: rgba(15, 15, 255, 0.4);border: 1px solid rgb(46, 52, 77);height: 20px;width: 20px;border-radius: 30px;}
+#wrapper #playerInfo {width: 80px;height: 100%;background-color: white;position: fixed;}
+
+
+#wrapper .creatureInfo {height: 30%; width: 100%;}
+#wrapper .health {height: 10%;width: 50%;border: 2px solid black;}
+#wrapper .color {width: 100%;height: 100%;background-color: green;}
+#wrapper #optionWindow {height: 80%;background-color: white;display: none;margin: 0 auto;}
+#wrapper #levelWindow {height: 80%;width: 350px;background-color: white;display: none;margin: 0 auto;}
+#wrapper #levelWindow #myMonster {float: left;}
+#wrapper #levelWindow #information {margin-top: 25px;margin-bottom: 10px;}
+#wrapper #levelWindow .fat {font-weight: bold;color: red;}
+#wrapper #opponent {position: relative;overflow: hidden;height: 65%;width: 50%;background-color: rgb(238, 234, 205);float: right;}
+#wrapper #opponent #opponentCreature {text-align: right;}
+#wrapper #opponent #opponentCreature div#opponentHealth {float: right;margin-right: 2%;}
+#wrapper #opponent #opponentCreature p {margin-right: 2%;}
+#wrapper #opponent img {right: 0;position: absolute;}
+#wrapper #opponent #opponentPic {top: 40px;right: 40px;height: 55%;}
+#wrapper #opponent .ground {top: 220px;}
+#wrapper #player {position: relative;overflow: hidden;height: 65%;width: 50%;background-color: rgb(238, 234, 205);float: left;}
+#wrapper #player .ground {bottom: 0px;}
+#wrapper .ground {position: absolute;height: 30%;}
+#wrapper #playerCreature #playerExp {height: 10%;width: 50%;border: 2px solid black;}
+#wrapper #playerCreature #playerExp #experience {width: 0%;height: 100%;background-color: blue;}
+#wrapper #player #playerCreature {margin-left: 2%; margin-bottom: -8%; margin-top: 8%;}
+#wrapper #player img {float: left;position: absolute;}
+#wrapper #player #playerPic {height: 60%;}
+#wrapper #attacks {border-top: 2px solid rgb(105, 105, 105);position: absolute;bottom: 0;height: 35%;width: 100%;background-color: rgb(163, 157, 155);}
+#wrapper #attacks #battleLog {border: 2px solid rgb(105, 105, 105);resize: none;height: 80%;width: 55%;position: absolute;bottom: 8%;margin-left: 2%;font-size: 20px;padding-left: 2%;}
+#wrapper #attacks #skillsAndEvents {width: 36%;height: 80%;background-color: white;border: 2px solid rgb(105,105,105);position: absolute;right: 2%;bottom: 8%;}
+    #wrapper #attacks #skillsAndEvents #info
+    {
+        margin-left: 5%;margin-top: 2%;
+    }
+#wrapper #attacks #skillsAndEvents #skills {list-style-type: none;float: left;margin-left: 5%;margin-top: 2%;}
+#wrapper #attacks #skillsAndEvents #events {list-style-type: none;
+right: 5%;
+bottom: 18%;
+position: absolute;}
+#skills li
+{
+    display: inline;
+    margin-right: 15px;
+}
+#skills li a
+{
+    padding: 8px;
+    background-color: rgb(199, 15, 15);
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 5px;
+}
+#events li
+{
+    display: inline;
+    margin-right: 15px;
+}
+#events li a
+{
+    padding: 8px;
+    background-color: rgb(199, 15, 15);
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 5px;
+}
