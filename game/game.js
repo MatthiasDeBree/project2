@@ -160,9 +160,24 @@ $(window).load(function () {
         var won = params.won;
         var level = params.level;
         var maxlevel = params.maxlevel;
+        var coins;
 
         $('body').css({
             'overflow': 'scroll'
+        });
+
+        $.ajax({
+            type: "GET",
+            url: "http://mattweb.be/ProjectGame/api/players/" + player,
+            dataType: "JSON",
+            success: function (data) {
+                coins = data.content[0].coins;
+                $('#total').text(coins);
+            }
+        });
+
+        $('input').change(function () {
+            $('#price').text(100 * parseInt($(this).val()));
         });
 
         // Draw level markers on the map
@@ -205,6 +220,21 @@ $(window).load(function () {
             });
         }
         
+        $('#openShop').on('click', function (event) {
+            event.preventDefault();
+            event.stopImmediatePropagation();
+
+            $('#shop').toggle();
+        });
+
+        $('#buy').on('click', function () {
+            if ((100 * parseInt($('input').val())) > coins) {
+                console.log('error');
+            }
+            else {
+
+            }
+        });
     }
     
 
@@ -686,24 +716,38 @@ var endScreen = function (ending, level, player, maxlevel) {
     setTimeout(function () {
         if (ending == 'won') {
 
-            console.log(max + ' / ' + level);
+            $.ajax({
+                type: "GET",
+                url: "http://mattweb.be/ProjectGame/api/players/" + player,
+                dataType: "JSON",
+                success: function (data) {
+                    $.ajax({
+                        type: "POST",
+                        url: "http://mattweb.be/ProjectGame/api/players/" + player,
+                        data: { coins: (parseInt(data.content[0].coins) + 25) },
+                        dataType: "JSON",
+                        success: function () {
+                            if (max == level) {
+                                max++;
+                                $.ajax({
+                                    type: "POST",
+                                    url: "http://mattweb.be/ProjectGame/api/players/" + player,
+                                    data: { level: max },
+                                    dataType: "JSON",
+                                    success: function () {
+                                        console.log('added maxlevel= ' + max);
+                                        window.location.href = 'map.html?&player=' + player + '&level=' + levelID + '&won=true' + '&maxlevel=' + max;
+                                    }
+                                });
+                            }
+                            else {
+                                window.location.href = 'map.html?&player=' + player + '&level=' + levelID + '&won=true' + '&maxlevel=' + max;
+                            }
+                        }
+                    });
+                }
+            });
 
-            if (max == level) {
-                max++;
-                $.ajax({
-                    type: "POST",
-                    url: "http://mattweb.be/ProjectGame/api/players/" + player,
-                    data: { level: max, coins: 100 },
-                    dataType: "JSON",
-                    success: function () {
-                        console.log('added coins and level= ' + max);
-                        window.location.href = 'map.html?&player=' + player + '&level=' + levelID + '&won=true' + '&maxlevel=' + max;
-                    }
-                });
-            }
-            else {
-                window.location.href = 'map.html?&player=' + player + '&level=' + levelID + '&won=true' + '&maxlevel=' + max;
-            }
         }
         else {
             window.location.href = 'map.html?&player=' + player + '&level=' + levelID + '&maxlevel=' + max;
