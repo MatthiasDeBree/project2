@@ -23,35 +23,35 @@ ul#myAccounts li a span {float: right;}
     border: 1px solid red!important;
     color: red;
 }
-    #create #form input
-    {
-        width: 200px;
-        height: 26px;
-        font-size: 16px;
-        -webkit-box-shadow:  2px 2px 5px 1px rgba(50, 50, 50, 0.3);
-        box-shadow:  2px 2px 5px 1px rgba(50, 50, 50, 0.3);
-        border: none;
-        border-radius: 5px;
-        padding: 5px;
-        margin-top: 10px;
-    }
-    #create #monsters
-    {
-        margin: 0 auto;
-        width: 350px;
-    }
-    #create #createPlayer
-    {
-        margin: 0 auto;
-        width: 129px;
-        padding: 20px 20px;
-        color: rgb(255, 255, 255);
-        text-decoration: none;
-        display: block;
-        text-align: center;
-        background-color: rgb(50,50,50);
-        border-radius: 5px;
-    }
+#create #form input
+{
+    width: 200px;
+    height: 26px;
+    font-size: 16px;
+    -webkit-box-shadow:  2px 2px 5px 1px rgba(50, 50, 50, 0.3);
+    box-shadow:  2px 2px 5px 1px rgba(50, 50, 50, 0.3);
+    border: none;
+    border-radius: 5px;
+    padding: 5px;
+    margin-top: 10px;
+}
+#create #monsters
+{
+    margin: 0 auto;
+    width: 350px;
+}
+#create #createPlayer
+{
+    margin: 0 auto;
+    width: 129px;
+    padding: 20px 20px;
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+    display: block;
+    text-align: center;
+    background-color: rgb(50,50,50);
+    border-radius: 5px;
+}
 #pickMonsters
 {
     margin-bottom: 50px;
@@ -145,5 +145,19 @@ position: absolute;}
     color: white;
     font-weight: bold;
     text-decoration: none;
+    border-radius: 5px;
+}
+#pickNew
+{
+    display: none;
+    margin-top: -20px!important;
+    margin-left: 20px;
+    float: left;
+    width: 129px;
+    padding: 20px 20px;
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+    text-align: center;
+    background-color: rgb(50,50,50);
     border-radius: 5px;
 }

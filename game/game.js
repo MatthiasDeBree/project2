@@ -253,6 +253,10 @@ $(window).load(function () {
             $('#optionWindow').css({
                 'display': 'none'
             });
+            $('#startBattle').toggle();
+            $('#pickNew').css({
+                'display': 'block'
+            });
 
             // Get my monster and store in chosenPlayerMonster
             $.each(myMonsters.content, function (i, deckMonster) {
@@ -367,7 +371,7 @@ var beginBattle = function (chosenPlayerMonster, myMonsters, chosenOpponentMonst
 
                 //playerMove
                 if (onTheMove == 0) {
-
+                    console.log(onTheMove);
                     // attack skill
                     $('.skill a').on('click', function (event) {
                         $('#skillsAndEvents').css({
@@ -458,6 +462,7 @@ var beginBattle = function (chosenPlayerMonster, myMonsters, chosenOpponentMonst
 
                 //opponentMove
                 else {
+                    console.log(onTheMove);
                     onTheMove--;
 
                     setTimeout(function () {
@@ -482,9 +487,9 @@ var beginBattle = function (chosenPlayerMonster, myMonsters, chosenOpponentMonst
 
             }
             else if ((playerCurrentHp <= 0) && (monstersLeft > 1)) { // Died but there are more in the deck
-                
+                console.log(onTheMove);
                 clearInterval(refreshIntervalId); // Stop the loop
-
+                console.log(onTheMove);
                 deadMonsters[monstersLeft] = chosenPlayerMonster.name;
                 monstersLeft--;
                 console.log(deadMonsters);
@@ -516,7 +521,8 @@ var beginBattle = function (chosenPlayerMonster, myMonsters, chosenOpponentMonst
 
                     });
 
-                    $('#startBattle').on('click', function () {
+                    $('#pickNew').on('click', function () {
+                        console.log(onTheMove);
                         $('#optionWindow').css({
                             'display': 'none'
                         });
@@ -552,13 +558,19 @@ var beginBattle = function (chosenPlayerMonster, myMonsters, chosenOpponentMonst
                                     $('#skillsAndEvents').css({
                                         'background-color': 'White'
                                     });
-                                    $('#skills').toggle();
-                                    $('#events').toggle();
+                                    $('#skills').css({
+                                        'display': 'block'
+                                    });
+                                    $('#events').css({
+                                        'display': 'block'
+                                    });
+
+                                    onTheMove = 0;
+                                    loopMoves();
                                 });
                             }
                         });
-
-                        loopMoves();
+                        
                     });
 
                 }, 2000);
