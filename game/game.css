@@ -85,7 +85,7 @@ ul#myAccounts li a span {float: right;}
 
 
 #wrapper .creatureInfo {height: 30%; width: 100%;}
-#wrapper .health {height: 10%;width: 50%;border: 2px solid black;}
+#wrapper .health {height: 10%;width: 50%;border: 2px solid rgb(105,105,105);border-radius: 5px;}
 #wrapper .color {width: 100%;height: 100%;background-color: green;}
 #wrapper #optionWindow {height: 80%;background-color: white;display: none;margin: 0 auto;}
 #wrapper #levelWindow {height: 80%;width: 350px;background-color: white;display: none;margin: 0 auto;}
@@ -102,7 +102,7 @@ ul#myAccounts li a span {float: right;}
 #wrapper #player {position: relative;overflow: hidden;height: 65%;width: 50%;background-color: rgb(238, 234, 205);float: left;}
 #wrapper #player .ground {bottom: 0px;}
 #wrapper .ground {position: absolute;height: 30%;}
-#wrapper #playerCreature #playerExp {height: 10%;width: 50%;border: 2px solid black;}
+#wrapper #playerCreature #playerExp {height: 10%;width: 50%;border: 2px solid rgb(105,105,105);border-radius: 5px;}
 #wrapper #playerCreature #playerExp #experience {width: 0%;height: 100%;background-color: blue;}
 #wrapper #player #playerCreature {margin-left: 2%; margin-bottom: -8%; margin-top: 8%;}
 #wrapper #player img {float: left;position: absolute;}

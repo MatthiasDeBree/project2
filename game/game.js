@@ -2,7 +2,7 @@
 
 //constant
 var maxDeckMonsters = 4;
-var monsters = ['Finlix', 'Meleon', 'Purrlit'];
+var monsters = ['Finlix', 'Meleon', 'Purrlit', 'Paracaw', 'Cuburn'];
 var levels = [
     { 'level': '0', 'top': '745px', 'left': '628px', 'gym': 'false' },
     { 'level': '1', 'top': '655px', 'left': '630px', 'gym': 'false' }, //trainlevel
@@ -272,7 +272,7 @@ $(window).load(function () {
                     // Get opponent random monster and store in chosenOpponentMonster
                     $.ajax({
                         type: 'GET',
-                        url: 'http://mattweb.be/ProjectGame/api/monsters/' + monsters[Math.floor((Math.random() * 3))],
+                        url: 'http://mattweb.be/ProjectGame/api/monsters/' + monsters[Math.floor((Math.random() * 2) + 3)],
                         dataType: 'JSONP',
                         success: function (data) {
                             chosenOpponentMonster = data.content[0];
@@ -305,7 +305,6 @@ var beginBattle = function (chosenPlayerMonster, myMonsters, chosenOpponentMonst
         $('.event').css('display', 'none');
     }
     else {
-        console.log('training');
         if (levels.level != 0) {
             $('#events').css('display', 'block');
         }  
@@ -371,7 +370,7 @@ var beginBattle = function (chosenPlayerMonster, myMonsters, chosenOpponentMonst
 
                 //playerMove
                 if (onTheMove == 0) {
-                    console.log(onTheMove);
+
                     // attack skill
                     $('.skill a').on('click', function (event) {
                         $('#skillsAndEvents').css({
@@ -423,6 +422,7 @@ var beginBattle = function (chosenPlayerMonster, myMonsters, chosenOpponentMonst
                         });
                         $('#skills').toggle();
                         $('#events').toggle();
+
                         if ((gym == 'false') && (myMonsters.content.length < maxDeckMonsters)) {
                             var ball = 60; // normal = 100, ultra = 150, ...
                             var catchRate = ball * (1 - (opponentLevel / 100));
@@ -437,7 +437,9 @@ var beginBattle = function (chosenPlayerMonster, myMonsters, chosenOpponentMonst
                                     data: { name: chosenOpponentMonster.name, level: opponentLevel, hp: opponentTotalHp, str: opponentStr, xp: opponentExp, current_xp: 0, multiplier: opponentMultiplier, player_id: player, skill1: opponentSkills[0].skill1, skill2: opponentSkills[0].skill2, skill3: opponentSkills[0].skill3 },
                                     dataType: "JSON",
                                     success: function () {
-                                        endScreen('won', levels.level, player, maxlevel);
+                                        setTimeout(function () {
+                                            endScreen('won', levels.level, player, maxlevel);
+                                        }, 1000);
                                     }
                                 });
                             }
@@ -462,7 +464,6 @@ var beginBattle = function (chosenPlayerMonster, myMonsters, chosenOpponentMonst
 
                 //opponentMove
                 else {
-                    console.log(onTheMove);
                     onTheMove--;
 
                     setTimeout(function () {
@@ -487,16 +488,16 @@ var beginBattle = function (chosenPlayerMonster, myMonsters, chosenOpponentMonst
 
             }
             else if ((playerCurrentHp <= 0) && (monstersLeft > 1)) { // Died but there are more in the deck
-                console.log(onTheMove);
+
                 clearInterval(refreshIntervalId); // Stop the loop
-                console.log(onTheMove);
                 deadMonsters[monstersLeft] = chosenPlayerMonster.name;
                 monstersLeft--;
-                console.log(deadMonsters);
-                console.log(monstersLeft);
 
                 setTimeout(function () {
                     $('#pickMonsters').empty();
+                    $('#pickNew').css({
+                        'display': 'block'
+                    });
 
                     $('#optionWindow').css({
                         'display': 'block'
@@ -522,7 +523,6 @@ var beginBattle = function (chosenPlayerMonster, myMonsters, chosenOpponentMonst
                     });
 
                     $('#pickNew').on('click', function () {
-                        console.log(onTheMove);
                         $('#optionWindow').css({
                             'display': 'none'
                         });
@@ -533,7 +533,7 @@ var beginBattle = function (chosenPlayerMonster, myMonsters, chosenOpponentMonst
                                 chosenPlayerMonster = deckMonster;
 
                                 $('#playerPic').attr('src', '../img/monsters/' + deckMonster.name + '.png');
-                                console.log(chosenPlayerMonster);
+
                                 playerLevel = chosenPlayerMonster.level;
                                 playerTotalHp = chosenPlayerMonster.hp; // total health points
                                 playerCurrentHp = playerTotalHp; // current health points
@@ -542,8 +542,8 @@ var beginBattle = function (chosenPlayerMonster, myMonsters, chosenOpponentMonst
                                 playerExp = chosenPlayerMonster.xp;
                                 playerCurrentExp = chosenPlayerMonster.current_xp;
                                 playerSkills = [chosenPlayerMonster.skill1, chosenPlayerMonster.skill2, chosenPlayerMonster.skill3];
-                                console.log('fout bij overdragen waarden');
 
+                                $('#playerName').text('Lv.' + playerLevel + ' ' + chosenPlayerMonster.name);
                                 $('#skill1').text(playerSkills[0]);
                                 $('#skill2').text(playerSkills[1]);
                                 $('#skill3').text(playerSkills[2]);
@@ -582,7 +582,7 @@ var beginBattle = function (chosenPlayerMonster, myMonsters, chosenOpponentMonst
                     console.log('battle has ended');
 
                     if (opponentCurrentHp <= 0) {
-                        playerCurrentExp = parseInt(playerCurrentExp) + (opponentExp * opponentMultiplier * 1);
+                        playerCurrentExp = parseInt(playerCurrentExp) + (opponentExp * (opponentMultiplier * 2));
                         
                         if (playerCurrentExp >= playerExp) {
                             console.log('level up!');
