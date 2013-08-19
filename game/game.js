@@ -114,7 +114,7 @@ $(window).load(function () {
                         $.ajax({
                             type: "POST",
                             url: "http://mattweb.be/ProjectGame/api/players",
-                            data: { name: $('#playerName').val(), level: 0, coins: 0 },
+                            data: { name: $('#playerName').val(), level: 0, coins: 0, pokeballs: 0 },
                             dataType: "JSON",
                             success: function () {
 
@@ -161,6 +161,7 @@ $(window).load(function () {
         var level = params.level;
         var maxlevel = params.maxlevel;
         var coins;
+        var pokeballs;
 
         $('body').css({
             'overflow': 'scroll'
@@ -172,7 +173,9 @@ $(window).load(function () {
             dataType: "JSON",
             success: function (data) {
                 coins = data.content[0].coins;
+                pokeballs = parseInt(data.content[0].pokeballs);
                 $('#total').text(coins);
+                $('#balls').text(pokeballs);
             }
         });
 
@@ -228,11 +231,24 @@ $(window).load(function () {
         });
 
         $('#buy').on('click', function () {
-            if ((100 * parseInt($('input').val())) > coins) {
-                console.log('error');
+            if ((100 * parseInt($('input').val())) < coins) {
+                $('input').removeClass('error');
+                pokeballs += parseInt($('input').val());
+                coins = coins - (100 * parseInt($('input').val()));
+
+                $.ajax({
+                    type: "POST",
+                    url: "http://mattweb.be/ProjectGame/api/players/" + player,
+                    data: { coins: coins, pokeballs: pokeballs },
+                    dataType: "JSON",
+                    success: function () {
+                        $('#total').text(coins);
+                        $('#balls').text(pokeballs);
+                    }
+                });
             }
             else {
-
+                $('input').addClass('error');
             }
         });
     }
@@ -401,6 +417,17 @@ var beginBattle = function (chosenPlayerMonster, myMonsters, chosenOpponentMonst
     var onTheMove = Math.floor((Math.random() * 2));
     var monstersLeft = myMonsters.content.length;
     var deadMonsters = new Array();
+    var pokeballs;
+
+    $.ajax({
+        type: "GET",
+        url: "http://mattweb.be/ProjectGame/api/players/" + player,
+        dataType: "JSON",
+        success: function (data) {
+            pokeballs = parseInt(data.content[0].pokeballs);
+            $('#balls').text(pokeballs);
+        }
+    });
 
     if (onTheMove == 1) {
         $('#skillsAndEvents').css({
@@ -455,7 +482,7 @@ var beginBattle = function (chosenPlayerMonster, myMonsters, chosenOpponentMonst
                         if (gym == 'false') {
                             $('#battleLog').val('\n' + 'Running from battle...');
 
-                            endScreen('lost', levels.level, player, maxlevel);
+                            endScreen('lost', levels.level, player, maxlevel, pokeballs);
                         }
                     });
 
@@ -476,8 +503,10 @@ var beginBattle = function (chosenPlayerMonster, myMonsters, chosenOpponentMonst
                             var hpRate = (opponentCurrentHp / opponentTotalHp) * 100;
                             var random = Math.ceil(Math.random() * catchRate);
 
-                            if (random >= hpRate) { // if caught
+                            if ((random >= hpRate) && (pokeballs > 0)) { // if caught
                                 $('#battleLog').val('\n Succes! Monster is now captured!');
+                                pokeballs--;
+                                $('#balls').text(pokeballs);
                                 $.ajax({
                                     type: "POST",
                                     url: "http://mattweb.be/ProjectGame/api/deckMonsters",
@@ -485,14 +514,23 @@ var beginBattle = function (chosenPlayerMonster, myMonsters, chosenOpponentMonst
                                     dataType: "JSON",
                                     success: function () {
                                         setTimeout(function () {
-                                            endScreen('won', levels.level, player, maxlevel);
+                                            endScreen('won', levels.level, player, maxlevel, pokeballs);
                                         }, 1000);
                                     }
                                 });
                             }
+                            else if (pokeballs == 0) {
+                                $('#battleLog').val('\n' + 'Out of pokeballs!');
+                                pokeballs--;
+                                $('#balls').text(pokeballs);
+                                setTimeout(function () {
+                                    onTheMove++;
+                                }, 1000);
+                            }
                             else {
-
                                 $('#battleLog').val('\n' + 'Capture failed!');
+                                pokeballs--;
+                                $('#balls').text(pokeballs);
                                 setTimeout(function () {
                                     onTheMove++;
                                 }, 1000);
@@ -659,7 +697,7 @@ var beginBattle = function (chosenPlayerMonster, myMonsters, chosenOpponentMonst
                                     $('#experience').animate({
                                         width: (((playerCurrentExp - playerExp) / Math.round(playerExp * 2 * playerMultiplier)) * 100) + '%'
                                     }, 1000, function () {
-                                        endScreen('won', levels.level, player, maxlevel);
+                                        endScreen('won', levels.level, player, maxlevel, pokeballs);
                                     });
                                 });
                             });
@@ -688,13 +726,13 @@ var beginBattle = function (chosenPlayerMonster, myMonsters, chosenOpponentMonst
                                 success: function () {
                                     console.log('success');
 
-                                    endScreen('won', levels.level, player, maxlevel);
+                                    endScreen('won', levels.level, player, maxlevel, pokeballs);
                                 }
                             });
                         }
                     }
                     else {
-                        endScreen('lost', levels.level, player, maxlevel);
+                        endScreen('lost', levels.level, player, maxlevel, pokeballs);
                     }
                 }, 1500);
             }
@@ -707,7 +745,7 @@ var beginBattle = function (chosenPlayerMonster, myMonsters, chosenOpponentMonst
 
 }
 
-var endScreen = function (ending, level, player, maxlevel) {
+var endScreen = function (ending, level, player, maxlevel, pokeballs) {
     var levelID = parseInt(level);
     var max = parseInt(maxlevel);
 
@@ -724,7 +762,7 @@ var endScreen = function (ending, level, player, maxlevel) {
                     $.ajax({
                         type: "POST",
                         url: "http://mattweb.be/ProjectGame/api/players/" + player,
-                        data: { coins: (parseInt(data.content[0].coins) + 25) },
+                        data: { coins: (parseInt(data.content[0].coins) + 25), pokeballs: pokeballs },
                         dataType: "JSON",
                         success: function () {
                             if (max == level) {

@@ -198,8 +198,8 @@ position: absolute;}
 
 #shop
 {
-    height: 60%;
-    width: 40%;
+    height: 50%;
+    width: 45%;
     background-color: rgba(250,250,250,0.7);
     position: fixed;
     left: 8%;
@@ -209,7 +209,7 @@ position: absolute;}
 
     #shop img
     {
-        height: 100%;
+        height: 60%;
         float: left;
     }
 
