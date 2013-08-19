@@ -270,19 +270,36 @@ $(window).load(function () {
                     });
 
                     // Get opponent random monster and store in chosenOpponentMonster
-                    $.ajax({
-                        type: 'GET',
-                        url: 'http://mattweb.be/ProjectGame/api/monsters/' + monsters[Math.floor((Math.random() * 2) + 3)],
-                        dataType: 'JSONP',
-                        success: function (data) {
-                            chosenOpponentMonster = data.content[0];
+                    if ((levels[level - 1].gym != 'true') || (levels[level - 1].level == 0)) {
+                        $.ajax({
+                            type: 'GET',
+                            url: 'http://mattweb.be/ProjectGame/api/monsters/' + monsters[Math.floor((Math.random() * 2) + 3)],
+                            dataType: 'JSONP',
+                            success: function (data) {
+                                chosenOpponentMonster = data.content[0];
 
-                            $('#opponentPic').attr('src', '../img/monsters/' + chosenOpponentMonster.name + '.png');
+                                $('#opponentPic').attr('src', '../img/monsters/' + chosenOpponentMonster.name + '.png');
 
-                            //Start battle
-                            beginBattle(chosenPlayerMonster, myMonsters ,chosenOpponentMonster, player, levels[level - 1], maxlevel);
-                        }
-                    });
+                                //Start battle
+                                beginBattle(chosenPlayerMonster, myMonsters, chosenOpponentMonster, player, levels[level - 1], maxlevel);
+                            }
+                        });
+                    }
+                    else {
+                        $.ajax({
+                            type: 'GET',
+                            url: 'http://mattweb.be/ProjectGame/api/monsters/' + monsters[Math.floor((Math.random() * 3))],
+                            dataType: 'JSONP',
+                            success: function (data) {
+                                chosenOpponentMonster = data.content[0];
+
+                                $('#opponentPic').attr('src', '../img/monsters/' + chosenOpponentMonster.name + '.png');
+
+                                //Start battle
+                                beginBattle(chosenPlayerMonster, myMonsters, chosenOpponentMonster, player, levels[level - 1], maxlevel);
+                            }
+                        });
+                    }
                 }
             });
         });
@@ -487,7 +504,7 @@ var beginBattle = function (chosenPlayerMonster, myMonsters, chosenOpponentMonst
                 }
 
             }
-            else if ((playerCurrentHp <= 0) && (monstersLeft > 1)) { // Died but there are more in the deck
+            else if ((playerCurrentHp <= 0) && (monstersLeft > 0)) { // Died but there are more in the deck
 
                 clearInterval(refreshIntervalId); // Stop the loop
                 deadMonsters[monstersLeft] = chosenPlayerMonster.name;
@@ -695,11 +712,21 @@ var endScreen = function (ending, level, player, maxlevel) {
 }
 
 var drawMarker = function (levelObject) {
-    $('#levelMarkers').append('<div id="level' + levelObject.level + '" class="marker"></div>');
-    $('#level' + levelObject.level).css({
-        'top': levelObject.top,
-        'left': levelObject.left
-    });
+
+    if (levelObject.gym == 'true') {
+        $('#levelMarkers').append('<div id="level' + levelObject.level + '" class="marker"></div>');
+        $('#level' + levelObject.level).css({
+            'top': levelObject.top,
+            'left': levelObject.left
+        });
+    }
+    else {
+        $('#levelMarkers').append('<div id="level' + levelObject.level + '" class="marker training"></div>');
+        $('#level' + levelObject.level).css({
+            'top': levelObject.top,
+            'left': levelObject.left
+        });
+    }
 }
 
 var getUrlParameters = function () {
