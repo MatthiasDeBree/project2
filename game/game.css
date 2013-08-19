@@ -93,6 +93,24 @@ ul#myAccounts li a span {float: right;}
 
 #wrapper #map {position: absolute;}
 #wrapper #levelMarkers .marker {position:absolute;padding: 10px;background-color: rgba(255, 0, 0, 0.4);border: 1px solid rgb(46, 52, 77);height: 20px;width: 20px;border-radius: 30px;}
+.legende
+{
+    margin-bottom: 20px!important;
+}
+#legende1
+{
+    padding: 9px 19px;
+    background-color: rgba(255, 0, 0, 0.4);
+    border: 1px solid rgb(46, 52, 77);
+    border-radius: 30px;
+}
+#legende2
+{
+    padding: 9px 19px;
+    background-color: rgba(255, 255, 0, 0.4);
+    border: 1px solid rgb(46, 52, 77);
+    border-radius: 30px;
+}
 #levelMarkers .training
 {
     background-color: rgba(255, 255, 0, 0.4)!important;
