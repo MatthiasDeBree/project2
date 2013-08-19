@@ -231,7 +231,7 @@ $(window).load(function () {
         });
 
         $('#buy').on('click', function () {
-            if ((100 * parseInt($('input').val())) < coins) {
+            if ((100 * parseInt($('input').val())) <= coins) {
                 $('input').removeClass('error');
                 pokeballs += parseInt($('input').val());
                 coins = coins - (100 * parseInt($('input').val()));
@@ -521,7 +521,6 @@ var beginBattle = function (chosenPlayerMonster, myMonsters, chosenOpponentMonst
                             }
                             else if (pokeballs == 0) {
                                 $('#battleLog').val('\n' + 'Out of pokeballs!');
-                                pokeballs--;
                                 $('#balls').text(pokeballs);
                                 setTimeout(function () {
                                     onTheMove++;
@@ -572,7 +571,7 @@ var beginBattle = function (chosenPlayerMonster, myMonsters, chosenOpponentMonst
                 }
 
             }
-            else if ((playerCurrentHp <= 0) && (monstersLeft > 0)) { // Died but there are more in the deck
+            else if ((playerCurrentHp <= 0) && (monstersLeft > 1)) { // Died but there are more in the deck
 
                 clearInterval(refreshIntervalId); // Stop the loop
                 deadMonsters[monstersLeft] = chosenPlayerMonster.name;
@@ -688,6 +687,7 @@ var beginBattle = function (chosenPlayerMonster, myMonsters, chosenOpponentMonst
                                 $('#exp').text('Experience for next level up = ' + Math.round(playerExp * 2 * playerMultiplier));
 
                                 $('#continueBattle').on('click', function (event) {
+                                    $('#playerName').text('Lv.' + (parseInt(playerLevel) + 1) + ' ' + chosenPlayerMonster.name);
                                     $('#experience').css({
                                         width: 0 + '%'
                                     });
